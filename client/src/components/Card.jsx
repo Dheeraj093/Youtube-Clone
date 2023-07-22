@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import image from '../img/image.png'
 import title from '../img/title.png'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+// import {format} from 'timeago.js'
 
 const Container = styled.div`
   width:350px;
@@ -45,17 +47,33 @@ const Info = styled.div`
   
 `
 
-const Card = () => {
+const Card = ({type,video}) => {
+
+  const [channel, setChannel] = useState({});
+  
+  useEffect(()=>{
+       const fetchChannel = async()=>{
+         try {
+             const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`);
+             setChannel(res.data)
+         } catch (err) {
+            console.log("phir error")
+         }
+       }
+       fetchChannel();
+
+  },[video.userId])
+
   return (
     <Link to="/video/test" style={{textDecoration:"none"}}>
     <Container>
-        <Image src={image}/>
-        <Details>
-           <ChannelImage src={title} />
+        <Image type={type} src={video.imgUrl}/>
+        <Details type={type} >
+           <ChannelImage type={type} src={channel.img} />
            <Texts>
-              <Title>Test Video </Title>
-              <ChannelName>Dheeraj</ChannelName>
-              <Info >100000 views 1 day ago  </Info>
+              <Title>{video.title}</Title>
+              <ChannelName>{channel.name}</ChannelName>
+              <Info >{video.views} views  1 day ago </Info>
            </Texts>
         </Details>
     </Container>
