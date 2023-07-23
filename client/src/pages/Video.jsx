@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
@@ -7,6 +7,9 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import title from '../img/title.png'
 import Comments from '../components/Comments';
 import  Card2  from '../components/Card2';
+import { useDispatch,useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.div`
   display:flex;
@@ -112,6 +115,31 @@ const Subscribe = styled.button`
 
 
 const Video = () => {
+  const {currentUser} = useSelector((state)=>state.user);
+
+  const dispatch = useDispatch();
+
+  const path =useLocation().pathname.split("/")[2];
+
+  const [video, setVideo] = useState({})
+  const [channel, setChannel] = useState({})
+  
+  useEffect(() => {
+     const fetchData = async()=>{
+       try {
+          const videoRes = await axios.get(`http://localhost:8800/api/videos/find/${path}`)
+          const channelRes = await axios.get(`http://localhost:8800/api/users/find/${videoRes.userId}`)
+
+          setVideo(videoRes.data)
+          setChannel(channelRes.data)
+       } catch (err) {
+        
+       }
+     }
+     fetchData();
+  }, [path])
+  
+
   return (
     <Container>
        <Content>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import image from '../img/image.png'
 import title from '../img/title.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 // import {format} from 'timeago.js'
 
@@ -57,7 +57,7 @@ const Card = ({type,video}) => {
              const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`);
              setChannel(res.data)
          } catch (err) {
-            console.log("phir error")
+            
          }
        }
        fetchChannel();
@@ -65,7 +65,7 @@ const Card = ({type,video}) => {
   },[video.userId])
 
   return (
-    <Link to="/video/test" style={{textDecoration:"none"}}>
+    <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
     <Container>
         <Image type={type} src={video.imgUrl}/>
         <Details type={type} >

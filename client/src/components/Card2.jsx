@@ -50,6 +50,7 @@ const Info = styled.div`
 `
 
 const Card = ({type}) => {
+   
   return (
     <Link to="/video/test" style={{textDecoration:"none"}}>
     <Container >

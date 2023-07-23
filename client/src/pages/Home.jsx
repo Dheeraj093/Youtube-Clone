@@ -19,8 +19,7 @@ const Home = ({type}) => {
             const res = await axios.get(`http://localhost:8800/api/videos/${type}`)
             setVideos(res.data)
         } catch (err) {
-            // next(err)
-            console.log("hloooooooooooooooooooooo ")
+            
         }
          
       }
@@ -42,18 +41,4 @@ export default Home
 
 
 
-        // try {
-           
-        //     const { data } = await axios.post(
-        //         "http://localhost:5000/api/user/login",
-        //         { email, password },
-        //         config
-        //     );
-
-           
-        //     localStorage.setItem("userInfo", JSON.stringify(data));
-        //     setLoading(false);
-        //     history("/chats");
-        // } catch (error) {
-            
-        // }
+   
